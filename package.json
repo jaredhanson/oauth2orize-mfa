@@ -1,7 +1,14 @@
 {
-  "name": "oauth2orize-mfa",
+  "name": "oauth2orize-2fa",
   "version": "0.0.0",
-  "description": "",
+  "description": "2FA exchange for OAuth2orize.",
+  "keywords": [
+    "oauth",
+    "oauth2",
+    "2fa",
+    "mfa",
+    "otp"
+  ],
   "author": {
     "name": "Jared Hanson",
     "email": "jaredhanson@gmail.com",
@@ -9,10 +16,10 @@
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/jaredhanson/oauth2orize-mfa.git"
+    "url": "git://github.com/jaredhanson/oauth2orize-2fa.git"
   },
   "bugs": {
-    "url": "http://github.com/jaredhanson/oauth2orize-mfa/issues"
+    "url": "http://github.com/jaredhanson/oauth2orize-2fa/issues"
   },
   "license": "MIT",
   "licenses": [
