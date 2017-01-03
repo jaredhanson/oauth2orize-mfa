@@ -41,7 +41,7 @@ describe('exchange.oob', function() {
       chai.connect.use(oob(authenticate, issue))
         .req(function(req) {
           req.user = { id: 'c123', name: 'Example' };
-          req.body = { access_token: 'ey...', oob_code: 'a1b2c3' };
+          req.body = { mfa_token: 'ey...', oob_code: 'a1b2c3' };
         })
         .end(function(res) {
           response = res;
@@ -84,7 +84,7 @@ describe('exchange.oob', function() {
       chai.connect.use(oob(authenticate, issue))
         .req(function(req) {
           req.user = { id: 'c123', name: 'Example' };
-          req.body = { access_token: 'ey...', oob_code: 'a1b2c3', scope: 'execute' };
+          req.body = { mfa_token: 'ey...', oob_code: 'a1b2c3', scope: 'execute' };
         })
         .end(function(res) {
           response = res;

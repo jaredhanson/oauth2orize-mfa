@@ -41,7 +41,7 @@ describe('exchange.otp', function() {
       chai.connect.use(otp(authenticate, issue))
         .req(function(req) {
           req.user = { id: 'c123', name: 'Example' };
-          req.body = { access_token: 'ey...', otp: '123456' };
+          req.body = { mfa_token: 'ey...', otp: '123456' };
         })
         .end(function(res) {
           response = res;
