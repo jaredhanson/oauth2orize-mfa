@@ -11,13 +11,13 @@ describe('exchange.otp', function() {
   it('should throw if constructed without an authenticate callback', function() {
     expect(function() {
       otp();
-    }).to.throw(TypeError, 'oauth2orize-2fa.otp exchange requires an authenticate callback');
+    }).to.throw(TypeError, 'oauth2orize-mfa.otp exchange requires an authenticate callback');
   });
   
   it('should throw if constructed without an issue callback', function() {
     expect(function() {
       otp(function(){});
-    }).to.throw(TypeError, 'oauth2orize-2fa.otp exchange requires an issue callback');
+    }).to.throw(TypeError, 'oauth2orize-mfa.otp exchange requires an issue callback');
   });
   
   describe('authenticating and issuing an access token', function() {
