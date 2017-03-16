@@ -1,6 +1,6 @@
 {
   "name": "oauth2orize-mfa",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "description": "Multi-Factor Authentication exchanges for OAuth2orize.",
   "keywords": [
     "oauth",
