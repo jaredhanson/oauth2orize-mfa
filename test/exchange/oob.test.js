@@ -136,7 +136,40 @@ describe('exchange.oob', function() {
       expect(err.status).to.equal(400);
     });
   });
-  
+
+  describe('handling a request with bad typed MFA token', function() {
+    var response, err;
+
+    before(function(done) {
+      function authenticate(token, done) {
+        return done(null, { id: '0' })
+      }
+
+      function issue(client, user, oobCode, done) {
+        return done(null, '.ignore')
+      }
+
+      chai.connect.use(oob(authenticate, issue))
+        .req(function(req) {
+          req.user = { id: 'c123', name: 'Example' };
+          req.body = { oob_code: 'a1b2c3', mfa_token: { foo: 'bar' } };
+        })
+        .next(function(e) {
+          err = e;
+          done();
+        })
+        .dispatch();
+    });
+
+    it('should error', function() {
+      expect(err).to.be.an.instanceOf(Error);
+      expect(err.constructor.name).to.equal('TokenError');
+      expect(err.message).to.equal('mfa_token must be a string');
+      expect(err.code).to.equal('invalid_request');
+      expect(err.status).to.equal(400);
+    });
+  });
+
   describe('handling a request without an OOB code', function() {
     var response, err;
 
@@ -165,6 +198,39 @@ describe('exchange.oob', function() {
       expect(err).to.be.an.instanceOf(Error);
       expect(err.constructor.name).to.equal('TokenError');
       expect(err.message).to.equal('Missing required parameter: oob_code');
+      expect(err.code).to.equal('invalid_request');
+      expect(err.status).to.equal(400);
+    });
+  });
+
+  describe('handling a request with a bad typed OOB code', function() {
+    var response, err;
+
+    before(function(done) {
+      function authenticate(token, done) {
+        return done(null, { id: '0' })
+      }
+
+      function issue(client, user, oobCode, done) {
+        return done(null, '.ignore')
+      }
+
+      chai.connect.use(oob(authenticate, issue))
+        .req(function(req) {
+          req.user = { id: 'c123', name: 'Example' };
+          req.body = { oob_code: { foo: 'bar' }, mfa_token: 'ey...' };
+        })
+        .next(function(e) {
+          err = e;
+          done();
+        })
+        .dispatch();
+    });
+
+    it('should error', function() {
+      expect(err).to.be.an.instanceOf(Error);
+      expect(err.constructor.name).to.equal('TokenError');
+      expect(err.message).to.equal('oob_code must be a string');
       expect(err.code).to.equal('invalid_request');
       expect(err.status).to.equal(400);
     });
