@@ -29,7 +29,7 @@ describe('exchange.oob', function() {
         return done(null, { id: '1', username: 'johndoe' })
       }
       
-      function issue(client, user, oobCode, token, scope, done) {
+      function issue(client, user, oobCode, token, done) {
         if (client.id !== 'c123') { return done(new Error('incorrect client argument')); }
         if (user.username !== 'johndoe') { return done(new Error('incorrect user argument')); }
         if (oobCode !== 'a1b2c3') { return done(new Error('incorrect oobCode argument')); }
@@ -41,7 +41,7 @@ describe('exchange.oob', function() {
       chai.connect.use(oob(authenticate, issue))
         .req(function(req) {
           req.user = { id: 'c123', name: 'Example' };
-          req.body = { mfa_token: 'ey...', oob_code: 'a1b2c3', scope: 'execute' };
+          req.body = { mfa_token: 'ey...', oob_code: 'a1b2c3' };
         })
         .end(function(res) {
           response = res;
@@ -193,7 +193,7 @@ describe('exchange.oob', function() {
     });
   });
 
-  describe('authenticating and issuing with info and body', function() {
+  describe('authenticating and issuing with token, body, and info', function() {
     var response, err;
 
     before(function(done) {
@@ -208,7 +208,7 @@ describe('exchange.oob', function() {
         if (user.username !== 'johndoe') { return done(new Error('incorrect user argument')); }
         if (oobCode !== 'a1b2c3') { return done(new Error('incorrect oobCode argument')); }
         if (token !== 'ey...') { return done(new Error('incorrect token argument')); }
-        if (body.mfa_token !== 'ey...' || body.oob_code !== 'a1b2c3' || body.scope !== 'execute'  ) {
+        if (body.mfa_token !== 'ey...' || body.oob_code !== 'a1b2c3' ) {
           return done(new Error('incorrect body argument'));
         }
         if (info.provider !== 'XXX') { return done(new Error('incorrect info argument')); }
@@ -219,7 +219,7 @@ describe('exchange.oob', function() {
       chai.connect.use(oob(authenticate, issue))
         .req(function(req) {
           req.user = { id: 'c123', name: 'Example' };
-          req.body = { mfa_token: 'ey...', oob_code: 'a1b2c3', scope: 'execute' };
+          req.body = { mfa_token: 'ey...', oob_code: 'a1b2c3' };
         })
         .end(function(res) {
           response = res;

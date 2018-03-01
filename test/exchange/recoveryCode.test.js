@@ -60,7 +60,7 @@ describe('exchange.recoveryCode', function() {
     });
   });
 
-  describe('authenticating and issuing an access token based on scope', function() {
+  describe('authenticating and issuing an access token with token', function() {
     var response, err;
 
     before(function(done) {
@@ -70,12 +70,11 @@ describe('exchange.recoveryCode', function() {
         return done(null, { id: '1', username: 'johndoe' })
       }
 
-      function issue(client, user, recoveryCode, scope, done) {
+      function issue(client, user, recoveryCode, token, done) {
         if (client.id !== 'c123') { return done(new Error('incorrect client argument')); }
         if (user.username !== 'johndoe') { return done(new Error('incorrect user argument')); }
         if (recoveryCode !== '123456') { return done(new Error('incorrect recoveryCode argument')); }
-        if (scope.length !== 1) { return done(new Error('incorrect scope argument')); }
-        if (scope[0] !== 'execute') { return done(new Error('incorrect scope argument')); }
+        if (token !== 'ey...') { return done(new Error('incorrect token argument')); }
 
         return done(null, 's3cr1t')
       }
@@ -83,7 +82,7 @@ describe('exchange.recoveryCode', function() {
       chai.connect.use(recoveryCode(authenticate, issue))
         .req(function(req) {
           req.user = { id: 'c123', name: 'Example' };
-          req.body = { mfa_token: 'ey...', recovery_code: '123456', scope: 'execute' };
+          req.body = { mfa_token: 'ey...', recovery_code: '123456' };
         })
         .end(function(res) {
           response = res;
@@ -235,7 +234,7 @@ describe('exchange.recoveryCode', function() {
     });
   });
 
-  describe('authenticating and issuing an access token based on scope', function() {
+  describe('authenticating and issuing an access token with token, body, and info', function() {
     var response, err;
 
     before(function(done) {
@@ -245,13 +244,12 @@ describe('exchange.recoveryCode', function() {
         return done(null, { id: '1', username: 'johndoe' }, { provider: 'XXX' })
       }
 
-      function issue(client, user, recoveryCode, scope, body, info, done) {
+      function issue(client, user, recoveryCode, token, body, info, done) {
         if (client.id !== 'c123') { return done(new Error('incorrect client argument')); }
         if (user.username !== 'johndoe') { return done(new Error('incorrect user argument')); }
         if (recoveryCode !== '123456') { return done(new Error('incorrect recoveryCode argument')); }
-        if (scope.length !== 1) { return done(new Error('incorrect scope argument')); }
-        if (scope[0] !== 'execute') { return done(new Error('incorrect scope argument')); }
-        if (body.mfa_token !== 'ey...' || body.recovery_code !== '123456' || body.scope !== 'execute' ) {
+        if (token !== 'ey...') { return done(new Error('incorrect token argument')); }
+        if (body.mfa_token !== 'ey...' || body.recovery_code !== '123456') {
           return done(new Error('incorrect body argument'));
         }
         if (info.provider !== 'XXX') { return done(new Error('incorrect info argument')); }
@@ -262,7 +260,7 @@ describe('exchange.recoveryCode', function() {
       chai.connect.use(recoveryCode(authenticate, issue))
         .req(function(req) {
           req.user = { id: 'c123', name: 'Example' };
-          req.body = { mfa_token: 'ey...', recovery_code: '123456', scope: 'execute' };
+          req.body = { mfa_token: 'ey...', recovery_code: '123456' };
         })
         .end(function(res) {
           response = res;
