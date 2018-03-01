@@ -1,7 +1,6 @@
 var chai = require('chai')
   , oob = require('../../lib/exchange/oob');
 
-
 describe('exchange.oob', function() {
   
   it('should be named oob', function() {
@@ -95,7 +94,7 @@ describe('exchange.oob', function() {
     });
   });
 
-  describe('handling a request with bad typed MFA token', function() {
+  describe('handling a request with non-string MFA token', function() {
     var response, err;
 
     before(function(done) {
@@ -161,7 +160,7 @@ describe('exchange.oob', function() {
     });
   });
 
-  describe('handling a request with a bad typed OOB code', function() {
+  describe('handling a request with a non-string OOB code', function() {
     var response, err;
 
     before(function(done) {
