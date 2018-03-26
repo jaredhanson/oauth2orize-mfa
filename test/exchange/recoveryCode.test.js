@@ -234,7 +234,7 @@ describe('exchange.recoveryCode', function() {
     });
   });
 
-  describe('authenticating and issuing an access token with token, body, and info', function() {
+  describe('authenticating and issuing an access token with token, body, and info parameters', function() {
     var response, err;
 
     before(function(done) {

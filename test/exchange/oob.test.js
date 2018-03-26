@@ -193,7 +193,7 @@ describe('exchange.oob', function() {
     });
   });
 
-  describe('authenticating and issuing with token, body, and info', function() {
+  describe('authenticating and issuing with token, body, and info parameters', function() {
     var response, err;
 
     before(function(done) {
