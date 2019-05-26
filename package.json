@@ -1,6 +1,6 @@
 {
   "name": "oauth2orize-mfa",
-  "version": "0.0.0",
+  "version": "0.2.0",
   "description": "Multi-Factor Authentication exchanges for OAuth2orize.",
   "keywords": [
     "oauth",
@@ -36,7 +36,7 @@
     "chai-connect-middleware": "^0.3.1"
   },
   "scripts": {
-    "test": "node_modules/.bin/mocha test/*.test.js"
+    "test": "node_modules/.bin/mocha test/**/*.test.js"
   },
   "dependencies": {
     "utils-merge": "^1.0.0"
