@@ -10,6 +10,7 @@ describe('oauth2orize-2fa', function() {
     expect(pkg.exchange).to.be.an('object');
     expect(pkg.exchange.otp).to.be.a('function');
     expect(pkg.exchange.oob).to.be.a('function');
+    expect(pkg.exchange.recoveryCode).to.be.a('function');
   });
   
 });
